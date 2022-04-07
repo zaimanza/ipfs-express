@@ -66,8 +66,8 @@ const addFile = async (fileName, filePath) => {
     console.log("Checkpoint 4.2")
     console.log(fileName)
     console.log(file)
-    // const fileAdded = await client.add('Hello world!')
-    const fileAdded = await client.add({ path: fileName, content: file })
+    const fileAdded = await client.add('Hello world!')
+    // const fileAdded = await client.add({ path: fileName, content: file })
     console.log("Checkpoint 4.3")
     const fileHash = fileAdded[0].hash
     console.log("Checkpoint 4.4")
