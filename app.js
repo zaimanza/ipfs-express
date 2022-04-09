@@ -6,7 +6,7 @@ const fs = require('fs')
 
 
 
-const client = create({ protocol: 'http', host: 'localhost', port: '5001' })
+const client = create('/ip4/127.0.0.1/tcp/5001')
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -40,6 +40,8 @@ app.post('/upload', (req, res) => {
         }
 
         console.log("Checkpoint 4")
+        console.log(fileName)
+        console.log(filePath)
 
         const fileHash = await addFile(fileName, filePath)
 
