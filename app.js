@@ -17,9 +17,11 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
-app.post('/upload', (req, res) => {
+app.post('/upload', async (req, res) => {
 
     console.log("Checkpoint 1")
+
+    // const { cid } = await client.add('Hello world!')
     console.log(req.body)
     const file = req.files.file
     const fileName = req.body.filename
@@ -68,10 +70,11 @@ const addFile = async (fileName, filePath) => {
     console.log("Checkpoint 4.2")
     console.log(fileName)
     console.log(file)
-    const fileAdded = await client.add('Hello world!')
-    // const fileAdded = await client.add({ path: fileName, content: file })
+    // const fileAdded = await client.add('Hello world!')
+    const fileAdded = await client.add({ path: fileName, content: file })
     console.log("Checkpoint 4.3")
-    const fileHash = fileAdded[0].hash
+    console.log(fileAdded)
+    const fileHash = fileAdded.cid
     console.log("Checkpoint 4.4")
 
     return fileHash
