@@ -9,7 +9,7 @@ const sdk = require('matrix-js-sdk')
 
 // const ipfs = create('/ip4/127.0.0.1/tcp/5001')
 const ipfs = create({
-    url: '/ip4/127.0.0.1/tcp/5001',
+    url: '/ip4/127.0.0.1/tcp/5001',//need to change to public
     emitSelf: true,
     pubsub: { emitSelf: true },
     config: {
@@ -24,27 +24,58 @@ app.use(fileUpload())
 
 const topic = 'helloAimanzaethbq785gjb'
 
-app.get('/', async (req, res) => {
-    const receiveMsg = (msg) => {
-        console.log('GOT MESSAGE')
-        console.log(msg?.data)
-        var textEncoding = require('text-encoding');
-        var TextDecoder = textEncoding.TextDecoder;
-        var uint8array = new TextEncoder().encode("¢");
-        var theOutput = new TextDecoder().decode(msg?.data);
-        var outputObj = JSON.parse(theOutput)
-        console.log(outputObj?.thisMessage)
-    }
+const translateUint8Array = (data) => {
+    var textEncoding = require('text-encoding');
+    var TextDecoder = textEncoding.TextDecoder;
+    var uint8array = new TextEncoder().encode("¢");
+    var theOutput = new TextDecoder().decode(data);
+    return JSON.parse(theOutput)
 
-    await ipfs.pubsub.subscribe(topic, receiveMsg)
+}
+
+app.get('/', async (req, res) => {
 
     res.render('home')
 })
 
-app.post('/upload', async (req, res) => {
+app.post('/subscribe', async (req, res) => {
+    console.log("SUBSCRIBING")
+    await ipfs.pubsub.subscribe(
+        topic,
+        (msg) => {
+            console.log('GOT MESSAGE')
+            // console.log(msg)
+            console.log(translateUint8Array(msg?.data))
+        }
+    )
+})
+
+
+app.post('/sendMessage', async (req, res) => {
     console.log("GOING THROUGH FILE")
 
-    await ipfs.pubsub.publish(topic, JSON.stringify({ thisMessage: 'is from myself!' }))
+    await ipfs.pubsub.publish(
+        topic,
+        JSON.stringify({
+            thisMessag1: 'Message is received!',
+            thisMessag10: {
+                thisMessag1: 'Message is received!',
+                thisMessag10: [
+                    {
+                        thisMessag1: 'Message is received!',
+                        thisMessag10: 'Message is received!',
+                    },
+                    {
+                        thisMessag1: 'Message is received!',
+                        thisMessag10: 'Message is received!',
+                    },
+                ],
+            },
+        })
+    )
+})
+
+app.post('/upload', async (req, res) => {
 
     // console.log("Checkpoint 1")
 

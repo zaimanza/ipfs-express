@@ -7,15 +7,24 @@
     <title>IPFS Demo</title>
 </head>
 <body>
-    <h1>Upload file to IPFS</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <label for="">Filename</label>
+    <label>IPFS PUBSUB</label>
+    <form action="/subscribe" method="POST" enctype="multipart/form-data">
+        <!-- <label for="">Filename</label>
         <input type="text" name="filename">
         <br><br>
         <label for="">Upload file</label>
         <input type="file" name="file">
+        <br><br> -->
+        <input type="submit" value="Subscribe">
+    </form>  
+    <form action="/sendMessage" method="POST" enctype="multipart/form-data">
+        <!-- <label for="">Filename</label>
+        <input type="text" name="filename">
         <br><br>
-        <input type="submit" value="Submit">
+        <label for="">Upload file</label>
+        <input type="file" name="file">
+        <br><br> -->
+        <input type="submit" value="Send Message">
     </form>
     <!-- <button onclick="myFunction()">Click me</button> -->
 </body>
